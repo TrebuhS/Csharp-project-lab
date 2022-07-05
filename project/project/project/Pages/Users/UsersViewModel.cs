@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -39,11 +38,25 @@ namespace project.Views.Pages.Users
             }
         }
 
+        public string Address
+        {
+            get { return _address; }
+            set
+            {
+                if (_address != value)
+                {
+                    _address = value;
+                    OnPropertyChanged(nameof(Address));
+                }
+            }
+        }
+
         public ICommand SaveCommand { get; private set; }
 
         private UsersRepository _usersRepository;
-        private string _firstName = String.Empty;
-        private string _lastName = String.Empty;
+        private string _firstName = "";
+        private string _lastName = "";
+        private string _address = "";
 
         public UsersViewModel()
         {
@@ -82,6 +95,7 @@ namespace project.Views.Pages.Users
             User user = new User();
             user.FirstName = _firstName;
             user.LastName = _lastName;
+            user.Address = _address;
             _usersRepository.AddUser(user);
             Users.Add(user);
         }

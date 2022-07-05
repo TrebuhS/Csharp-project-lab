@@ -2,13 +2,7 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:project.Views.Pages.Users;assembly=project"
-             xmlns:behaviors="clr-namespace:project.Behaviours;assembly=project"
-             xmlns:behaviours="clr-namespace:project.Behaviours;assembly=project"
              x:Class="project.Views.Pages.Users.UsersTab">
-    <!-- <ContentPage.Behaviors> -->
-    <!--     <behaviours:EventToCommandBehavior EventName="Appearing" Command="{Binding ApearingCommand}" /> -->
-    <!-- </ContentPage.Behaviors> -->
 
     <ContentPage.Content>
         <StackLayout>
@@ -16,16 +10,13 @@
             <Entry Text="{Binding FirstName}" />
             <Label Text="Last Name:" />
             <Entry Text="{Binding LastName}" />
+            <Label Text="Address:" />
+            <Entry Text="{Binding Address}" />
             <Button Text="Save" Command="{Binding SaveCommand}" />
-            <ListView  x:Name="listView" ItemsSource="{Binding Users}">
+            <ListView ItemsSource="{Binding Users}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding FirstName}"/>
-                                <Label Text="{Binding LastName}" />
-                            </StackLayout>
-                        </ViewCell>
+                        <TextCell Text="{Binding FullName}" Detail="{Binding Address}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
