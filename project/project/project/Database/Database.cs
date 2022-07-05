@@ -12,6 +12,9 @@ namespace project.Database
         {
             Database = new SQLiteAsyncConnection(dbPath);
             Database.CreateTableAsync<Book>();
+            Database.CreateTableAsync<User>();
+            Database.CreateTableAsync<Borrow>();
+            Database.CreateTableAsync<Employee>();
         }
     }
 }

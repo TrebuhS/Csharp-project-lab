@@ -9,7 +9,7 @@ namespace project
     {
         static DatabaseManager database;
 
-        private static string _dbName = "library.db3";
+        private static readonly string _dbName = "library.db3";
 
         public static DatabaseManager Database
         {
