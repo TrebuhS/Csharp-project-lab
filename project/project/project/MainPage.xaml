@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:users="clr-namespace:project.Views.Pages.Users;assembly=project"
-            xmlns:books="clr-namespace:project.Views.Pages.Books;assembly=project"
-            xmlns:employees="clr-namespace:project.Views.Pages.Employees;assembly=project"
-            xmlns:borrows="clr-namespace:project.Views.Pages.Borrows;assembly=project"
+            xmlns:users="clr-namespace:project.Pages.Users;assembly=project"
+            xmlns:books="clr-namespace:project.Pages.Books;assembly=project"
+            xmlns:employees="clr-namespace:project.Pages.Employees;assembly=project"
+            xmlns:borrows="clr-namespace:project.Pages.Borrows;assembly=project"
             x:Class="project.MainPage">
     <NavigationPage Title="Users" IconImageSource="schedule.png">
         <x:Arguments>

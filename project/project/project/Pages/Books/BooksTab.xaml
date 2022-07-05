@@ -2,12 +2,22 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="project.Views.Pages.Books.BooksTab">
+             x:Class="project.Pages.Books.BooksTab">
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="Title:" />
+            <Entry Text="{Binding Title}" />
+            <Label Text="Author:" />
+            <Entry Text="{Binding Author}" />
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <ListView ItemsSource="{Binding Books}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Title}" Detail="{Binding Author}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

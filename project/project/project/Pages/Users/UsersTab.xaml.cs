@@ -7,7 +7,7 @@ using project.Database.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace project.Views.Pages.Users
+namespace project.Pages.Users
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UsersTab : ContentPage

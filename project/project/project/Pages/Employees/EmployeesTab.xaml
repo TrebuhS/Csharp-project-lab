@@ -2,12 +2,22 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="project.Views.Pages.Employees.EmployeesTab">
+             x:Class="project.Pages.Employees.EmployeesTab">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="First Name:" />
+            <Entry Text="{Binding FirstName}" />
+            <Label Text="Last Name:" />
+            <Entry Text="{Binding LastName}" />
+            <Picker x:Name="picker" Title="Position:" VerticalOptions="CenterAndExpand" />
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <ListView ItemsSource="{Binding Employees}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding FullName}" Detail="{Binding Position}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -2,7 +2,7 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="project.Views.Pages.Borrows.BorrowsTab">
+             x:Class="project.Pages.Borrows.BorrowsTab">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Hello, world!"

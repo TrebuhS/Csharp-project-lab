@@ -1,17 +1,29 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using project.Database.Models;
 using project.Database.Repositories;
 using Xamarin.Forms;
 
-namespace project.Pages.Users
+namespace project.Pages.Employees
 {
-    public class UsersViewModel
+    public class EmployeesViewModel
     {
-        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
+        public Dictionary<string, Position> NameToPosition = new Dictionary<string, Position>
+        {
+            {"Librarian", Position.Librarian},
+            {"Shift Supervisor", Position.ShiftSupervisor},
+            {"Manager", Position.Manager}
+        };
+        public ObservableCollection<Employee> Employees { get; } = new ObservableCollection<Employee>();
+
+        public string PositionName
+        {
+            get { return NameToPosition.FirstOrDefault(position => position.Value == _position).Key; }
+        }
         public string FirstName
         {
             get { return _firstName; }
@@ -38,49 +50,49 @@ namespace project.Pages.Users
             }
         }
 
-        public string Address
+        public Position Position
         {
-            get { return _address; }
+            get { return _position; }
             set
             {
-                if (_address != value)
+                if (_position != value)
                 {
-                    _address = value;
-                    OnPropertyChanged(nameof(Address));
+                    _position = value;
+                    OnPropertyChanged(nameof(Position));
                 }
             }
         }
 
         public ICommand SaveCommand { get; private set; }
 
-        private UsersRepository _usersRepository;
+        private EmployeesRepository _employeesRepository;
         private string _firstName = "";
         private string _lastName = "";
-        private string _address = "";
+        private Position _position = Position.Librarian;
 
-        public UsersViewModel()
+        public EmployeesViewModel()
         {
-            _usersRepository = new UsersRepository();
+            _employeesRepository = new EmployeesRepository();
             SaveCommand = new Command(SaveCommandExecute);
         }
         
         public async void OnAppear()
         {
-            if (Users.Count != 0)
+            if (Employees.Count != 0)
             {
                 return;
             }
-            List<User> users = await GetUsers();
+            List<Employee> employees = await GetEmployees();
         
-            foreach (User user in users)
+            foreach (Employee employee in employees)
             {
-                Users.Add(user);
+                Employees.Add(employee);
             }
         }
 
-        public Task<List<User>> GetUsers()
+        public Task<List<Employee>> GetEmployees()
         {
-            return _usersRepository.GetUsers();
+            return _employeesRepository.GetEmployees();
         }
     
         public event PropertyChangedEventHandler PropertyChanged;
@@ -92,12 +104,12 @@ namespace project.Pages.Users
 
         private void SaveCommandExecute()
         {
-            User user = new User();
-            user.FirstName = _firstName;
-            user.LastName = _lastName;
-            user.Address = _address;
-            _usersRepository.AddUser(user);
-            Users.Add(user);
+            Employee employee = new Employee();
+            employee.FirstName = _firstName;
+            employee.LastName = _lastName;
+            employee.Position = _position;
+            _employeesRepository.AddEmployee(employee);
+            Employees.Add(employee);
         }
     }
 }
