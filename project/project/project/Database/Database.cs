@@ -6,12 +6,12 @@ namespace project.Database
     public class DatabaseManager
     {
         
-        readonly SQLiteAsyncConnection database;
+        public readonly SQLiteAsyncConnection Database;
 
         public DatabaseManager(string dbPath)
         {
-            database = new SQLiteAsyncConnection(dbPath);
-            database.CreateTableAsync<Book>();
+            Database = new SQLiteAsyncConnection(dbPath);
+            Database.CreateTableAsync<Book>();
         }
     }
 }
