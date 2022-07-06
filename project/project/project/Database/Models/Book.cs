@@ -13,7 +13,7 @@ namespace project.Database.Models
         public string Author { get; set; }
         public DateTime CreatedAt { get; set; }
         
-        [OneToMany]
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Borrow> Borrows { get; set; }
     }
 }

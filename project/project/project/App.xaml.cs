@@ -31,12 +31,16 @@ namespace project
             MainPage = new MainPage();
         }
 
-        protected override void OnStart ()
+        protected override async void OnStart ()
         {
-            Database.Database.DeleteAllAsync<Book>();
-            Database.Database.DeleteAllAsync<User>();
-            Database.Database.DeleteAllAsync<Borrow>();
-            Database.Database.DeleteAllAsync<Employee>();
+            // await Database.Database.DeleteAllAsync<Book>();
+            // await Database.Database.DeleteAllAsync<User>();
+            // await Database.Database.DeleteAllAsync<Borrow>();
+            // await Database.Database.DeleteAllAsync<Employee>();
+            // await Database.Database.DropTableAsync<Borrow>();
+            // await Database.Database.DropTableAsync<User>();
+            // await Database.Database.DropTableAsync<Book>();
+            // await Database.Database.DropTableAsync<Employee>();
         }
 
         protected override void OnSleep ()

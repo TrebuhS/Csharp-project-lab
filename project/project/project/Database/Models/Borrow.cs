@@ -18,19 +18,19 @@ namespace project.Database.Models
         [ForeignKey(typeof(User))]
         public int UserId { get; set; }
         
-        [ManyToOne]
+        [ManyToOne(CascadeOperations = CascadeOperation.All), NotNull]
         public User User { get; set; }
         
         [ForeignKey(typeof(Employee))]
         public int EmployeeId { get; set; }
         
-        [ManyToOne]
+        [ManyToOne(CascadeOperations = CascadeOperation.All), NotNull]
         public Employee Employee { get; set; }
         
         [ForeignKey(typeof(Book))]
         public int BookId { get; set; }
         
-        [ManyToOne]
+        [ManyToOne(CascadeOperations = CascadeOperation.All), NotNull]
         public Book Book { get; set; }
 
         public String TitleWithUser => $"{Book.Title} {User.FullName}";

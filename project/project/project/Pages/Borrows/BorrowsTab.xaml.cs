@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using project.Database.Models;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +18,7 @@ namespace project.Pages.Borrows
             InitializeComponent();
             BindingContext = _borrowsViewModel;
             SetupPicker();
+            SetupListView();
         }
 
         protected override async void OnAppearing()
@@ -24,15 +27,8 @@ namespace project.Pages.Borrows
             await _borrowsViewModel.OnAppear();
         }
 
-        private async Task SetupPicker()
+        private void SetupPicker()
         {
-            BooksPicker.ItemsSource = await _borrowsViewModel.GetBooks();
-            _borrowsViewModel.Book = BooksPicker.SelectedItem as Book;
-            UsersPicker.ItemsSource = await _borrowsViewModel.GetUsers();
-            _borrowsViewModel.User = UsersPicker.SelectedItem as User;
-            EmployeesPicker.ItemsSource = await _borrowsViewModel.GetEmployees();
-            _borrowsViewModel.Employee = EmployeesPicker.SelectedItem as Employee;
-
             BooksPicker.SelectedIndexChanged += (sender, args) =>
             {
                 _borrowsViewModel.Book = (BooksPicker.SelectedItem as Book);
@@ -44,6 +40,14 @@ namespace project.Pages.Borrows
             EmployeesPicker.SelectedIndexChanged += (sender, args) =>
             {
                 _borrowsViewModel.Employee = (EmployeesPicker.SelectedItem as Employee);
+            };
+        }
+
+        private void SetupListView()
+        {
+            ListView.ItemTapped += (sender, args) =>
+            {
+                _borrowsViewModel.FinishBorrow(args.Item as Borrow);
             };
         }
     }

@@ -13,7 +13,7 @@ namespace project.Database.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         
-        [OneToMany]
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Borrow> Borrows { get; set; }
 
 

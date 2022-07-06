@@ -14,6 +14,9 @@ namespace project.Pages.Borrows
     public class BorrowsViewModel
     {
         public ObservableCollection<Borrow> Borrows { get; } = new ObservableCollection<Borrow>();
+        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
+        public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
+        public ObservableCollection<Employee> Employees { get; } = new ObservableCollection<Employee>();
 
         public Book Book
         {
@@ -72,34 +75,71 @@ namespace project.Pages.Borrows
             _booksRepository = new BooksRepository();
             SaveCommand = new Command(SaveCommandExecute);
         }
+
+        public void FinishBorrow(Borrow borrow)
+        {
+            borrow.DateOfReturn = DateTime.Now;
+            _borrowsRepository.UpdateBorrow(borrow);
+            RefreshBorrows();
+        }
         
         public async Task OnAppear()
         {
-            if (Borrows.Count != 0)
+            if (Borrows.Count == 0)
             {
-                return;
+                RefreshBorrows();
             }
-            List<Borrow> borrows = await GetBorrows();
-        
-            foreach (Borrow borrow in borrows)
+
+            Books.Clear();
+            List<Book> books = await GetBooks();
+
+            if (books != null)
             {
-                Borrows.Add(borrow);
+                _book = books.FirstOrDefault();
+                foreach (Book book in books)
+                {
+                    Books.Add(book);
+                }
+            }
+
+            Users.Clear();
+            List<User> users = await GetUsers();
+
+            if (users != null)
+            {
+                _user = users.FirstOrDefault();
+                foreach (User user in users)
+                {
+                    Users.Add(user);
+                }
+            }
+
+            Employees.Clear();
+            List<Employee> employees = await GetEmployees();
+
+            if (employees != null)
+            {
+                _employee = employees.FirstOrDefault();
+                foreach (Employee employee in employees)
+                {
+                    Employees.Add(employee);
+                }
             }
         }
 
-        public Task<List<Borrow>> GetBorrows()
+        private List<Borrow> GetBorrows()
         {
             return _borrowsRepository.GetBorrows();
         }
-        public Task<List<User>> GetUsers()
+        private Task<List<User>> GetUsers()
         {
             return _usersRepository.GetUsers();
         }
-        public Task<List<Employee>> GetEmployees()
+        private Task<List<Employee>> GetEmployees()
         {
             return _employeesRepository.GetEmployees();
         }
-        public Task<List<Book>> GetBooks()
+        private Task<List<Book>> GetBooks()
         {
             return _booksRepository.GetBooks();
         }
@@ -111,8 +151,23 @@ namespace project.Pages.Borrows
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void RefreshBorrows()
+        {
+            Borrows.Clear();
+            List<Borrow> borrows = GetBorrows();
+    
+            foreach (Borrow borrow in borrows)
+            {
+                Borrows.Add(borrow);
+            }
+        }
+
         private void SaveCommandExecute()
         {
+            if (_book == null || _employee == null || _user == null)
+            {
+                return;
+            }
             Borrow borrow = new Borrow();
             borrow.Book = _book;
             borrow.Employee = _employee;
