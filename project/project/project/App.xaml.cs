@@ -2,6 +2,7 @@
 using System.IO;
 using Xamarin.Forms;
 using project.Database;
+using project.Database.Models;
 
 namespace project
 {
@@ -32,6 +33,10 @@ namespace project
 
         protected override void OnStart ()
         {
+            Database.Database.DeleteAllAsync<Book>();
+            Database.Database.DeleteAllAsync<User>();
+            Database.Database.DeleteAllAsync<Borrow>();
+            Database.Database.DeleteAllAsync<Employee>();
         }
 
         protected override void OnSleep ()

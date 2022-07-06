@@ -31,17 +31,17 @@ namespace project.Pages.Employees
         {
             foreach (var positionName in _employeesViewModel.NameToPosition.Keys)
             {
-                picker.Items.Add(positionName);
+                PositionPicker.Items.Add(positionName);
             }
-            picker.SelectedIndexChanged += (sender, args) =>
+            PositionPicker.SelectedIndexChanged += (sender, args) =>
             {
-                if (picker.SelectedIndex == -1)
+                if (PositionPicker.SelectedIndex == -1)
                 {
                     _employeesViewModel.Position = Position.Librarian;
                 }
                 else
                 {
-                    string positionName = picker.Items[picker.SelectedIndex];
+                    string positionName = PositionPicker.Items[PositionPicker.SelectedIndex];
                     _employeesViewModel.Position = _employeesViewModel.NameToPosition[positionName];
                 }
             };

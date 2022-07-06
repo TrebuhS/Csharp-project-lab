@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
@@ -9,6 +10,10 @@ namespace project.Database.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        
+        public DateTime CreatedAt { get; set; }
+        
+        public DateTime? DateOfReturn { get; set; }
         
         [ForeignKey(typeof(User))]
         public int UserId { get; set; }
@@ -27,6 +32,9 @@ namespace project.Database.Models
         
         [ManyToOne]
         public Book Book { get; set; }
+
+        public String TitleWithUser => $"{Book.Title} {User.FullName}";
         
+        public String StatusDetails => DateOfReturn == null ? "Book is not returned." : $"{DateOfReturn?.ToString(CultureInfo.CurrentCulture)}";
     }
 }

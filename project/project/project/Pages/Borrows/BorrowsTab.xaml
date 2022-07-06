@@ -5,9 +5,29 @@
              x:Class="project.Pages.Borrows.BorrowsTab">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <StackLayout Margin="20">
+                <Label Text="Book:" />
+                <Picker x:Name="BooksPicker" Title="Books" VerticalOptions="CenterAndExpand" ItemDisplayBinding="{Binding Title}" />
+                <Label Text="Employee:" />
+                <Picker x:Name="EmployeesPicker" Title="Employees" VerticalOptions="CenterAndExpand" ItemDisplayBinding="{Binding FullName}" />
+                <Label Text="User:" />
+                <Picker x:Name="UsersPicker" Title="Users" VerticalOptions="CenterAndExpand" ItemDisplayBinding="{Binding FullName}" />
+                <Button 
+                    HorizontalOptions="Center" 
+                    Margin="0 ,10, 0,  0"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    Text="Save"
+                    Command="{Binding SaveCommand}" 
+                />
+            </StackLayout>
+            <ListView ItemsSource="{Binding Borrows}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding TitleWithUser}" Detail="{Binding StatusDetails}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
