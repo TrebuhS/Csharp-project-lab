@@ -13,11 +13,10 @@ namespace project.Pages.Borrows
 {
     public class BorrowsViewModel
     {
-        public ObservableCollection<Borrow> Borrows { get; } = new ObservableCollection<Borrow>();
-        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
-        public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
-        public ObservableCollection<Employee> Employees { get; } = new ObservableCollection<Employee>();
-
+        
+        /// <summary>
+        /// Selected book.
+        /// </summary>
         public Book Book
         {
             get { return _book; }
@@ -31,6 +30,9 @@ namespace project.Pages.Borrows
             }
         }
 
+        /// <summary>
+        /// Selected employee.
+        /// </summary>
         public Employee Employee
         {
             get { return _employee; }
@@ -44,6 +46,9 @@ namespace project.Pages.Borrows
             }
         }
 
+        /// <summary>
+        /// Selected user.
+        /// </summary>
         public User User
         {
             get { return _user; }
@@ -57,7 +62,35 @@ namespace project.Pages.Borrows
             }
         }
 
-        public ICommand SaveCommand { get; private set; }
+        /// <summary>
+        /// Command responsible for saving book.
+        /// </summary>
+        public ICommand SaveCommand { get; }
+        
+        /// <summary>
+        /// Collection of borrows.
+        /// </summary>
+        public ObservableCollection<Borrow> Borrows { get; } = new ObservableCollection<Borrow>();
+        
+        /// <summary>
+        /// Collection of added users.
+        /// </summary>
+        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
+        
+        /// <summary>
+        /// Collection of added books.
+        /// </summary>
+        public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
+        
+        /// <summary>
+        /// Collection of working employees.
+        /// </summary>
+        public ObservableCollection<Employee> Employees { get; } = new ObservableCollection<Employee>();
+        
+        /// <summary>
+        /// Handles property changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private BorrowsRepository _borrowsRepository;
         private UsersRepository _usersRepository;
@@ -67,6 +100,9 @@ namespace project.Pages.Borrows
         private Employee _employee;
         private User _user;
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public BorrowsViewModel()
         {
             _borrowsRepository = new BorrowsRepository();
@@ -76,6 +112,10 @@ namespace project.Pages.Borrows
             SaveCommand = new Command(SaveCommandExecute);
         }
 
+        /// <summary>
+        /// Update a borrow with a date of return to mark that it's finished.
+        /// </summary>
+        /// <param name="borrow">Borrow to finish.</param>
         public void FinishBorrow(Borrow borrow)
         {
             borrow.DateOfReturn = DateTime.Now;
@@ -83,6 +123,9 @@ namespace project.Pages.Borrows
             RefreshBorrows();
         }
         
+        /// <summary>
+        /// Handles OnAppear event.
+        /// </summary>
         public async Task OnAppear()
         {
             if (Borrows.Count == 0)
@@ -127,6 +170,11 @@ namespace project.Pages.Borrows
             }
         }
 
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private List<Borrow> GetBorrows()
         {
             return _borrowsRepository.GetBorrows();
@@ -142,13 +190,6 @@ namespace project.Pages.Borrows
         private Task<List<Book>> GetBooks()
         {
             return _booksRepository.GetBooks();
-        }
-    
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void RefreshBorrows()

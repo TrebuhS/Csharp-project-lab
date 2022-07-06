@@ -11,7 +11,10 @@ namespace project.Pages.Users
 {
     public class UsersViewModel
     {
-        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
+        
+        /// <summary>
+        /// Entered first name.
+        /// </summary>
         public string FirstName
         {
             get { return _firstName; }
@@ -25,6 +28,9 @@ namespace project.Pages.Users
             }
         }
 
+        /// <summary>
+        /// Entered last name.
+        /// </summary>
         public string LastName
         {
             get { return _lastName; }
@@ -38,6 +44,9 @@ namespace project.Pages.Users
             }
         }
 
+        /// <summary>
+        /// Entered address.
+        /// </summary>
         public string Address
         {
             get { return _address; }
@@ -51,19 +60,38 @@ namespace project.Pages.Users
             }
         }
 
+        /// <summary>
+        /// Command responsible for saving book.
+        /// </summary>
         public ICommand SaveCommand { get; private set; }
+        
+        /// <summary>
+        /// Collection of users.
+        /// </summary>
+        public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
+        
+        /// <summary>
+        /// Handles property changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private UsersRepository _usersRepository;
         private string _firstName = "";
         private string _lastName = "";
         private string _address = "";
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public UsersViewModel()
         {
             _usersRepository = new UsersRepository();
             SaveCommand = new Command(SaveCommandExecute);
         }
         
+        /// <summary>
+        /// Handles OnAppear Event.
+        /// </summary>
         public async void OnAppear()
         {
             if (Users.Count != 0)
@@ -77,17 +105,15 @@ namespace project.Pages.Users
                 Users.Add(user);
             }
         }
-
-        public Task<List<User>> GetUsers()
-        {
-            return _usersRepository.GetUsers();
-        }
-    
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+        private Task<List<User>> GetUsers()
+        {
+            return _usersRepository.GetUsers();
         }
 
         private void SaveCommandExecute()

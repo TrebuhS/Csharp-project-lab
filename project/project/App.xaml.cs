@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Xamarin.Forms;
 using project.Database;
@@ -33,14 +34,6 @@ namespace project
 
         protected override async void OnStart ()
         {
-            // await Database.Database.DeleteAllAsync<Book>();
-            // await Database.Database.DeleteAllAsync<User>();
-            // await Database.Database.DeleteAllAsync<Borrow>();
-            // await Database.Database.DeleteAllAsync<Employee>();
-            // await Database.Database.DropTableAsync<Borrow>();
-            // await Database.Database.DropTableAsync<User>();
-            // await Database.Database.DropTableAsync<Book>();
-            // await Database.Database.DropTableAsync<Employee>();
         }
 
         protected override void OnSleep ()

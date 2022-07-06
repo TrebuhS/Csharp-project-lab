@@ -11,7 +11,10 @@ namespace project.Pages.Books
 {
     public class BooksViewModel
     {
-        public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
+        
+        /// <summary>
+        /// Entered title of the book.
+        /// </summary>
         public string Title
         {
             get { return _title; }
@@ -25,6 +28,9 @@ namespace project.Pages.Books
             }
         }
 
+        /// <summary>
+        /// Entered author of the book.
+        /// </summary>
         public string Author
         {
             get { return _author; }
@@ -37,19 +43,38 @@ namespace project.Pages.Books
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Command responsible for saving book.
+        /// </summary>
         public ICommand SaveCommand { get; private set; }
+        
+        /// <summary>
+        /// Collection of added books.
+        /// </summary>
+        public ObservableCollection<Book> Books { get; } = new ObservableCollection<Book>();
+        
+        /// <summary>
+        /// Handles property changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private BooksRepository _booksRepository;
         private string _title = "";
         private string _author = "";
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public BooksViewModel()
         {
             _booksRepository = new BooksRepository();
             SaveCommand = new Command(SaveCommandExecute);
         }
-        
+
+        /// <summary>
+        /// Handles OnAppear event.
+        /// </summary>
         public async void OnAppear()
         {
             if (Books.Count != 0)
@@ -63,17 +88,15 @@ namespace project.Pages.Books
                 Books.Add(book);
             }
         }
-
-        public Task<List<Book>> GetBooks()
-        {
-            return _booksRepository.GetBooks();
-        }
-    
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private Task<List<Book>> GetBooks()
+        {
+            return _booksRepository.GetBooks();
         }
 
         private void SaveCommandExecute()
